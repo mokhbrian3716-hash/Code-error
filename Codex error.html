@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex Error</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:tahoma}
+body{
+background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+color:#fff;
+padding:20px;
+}
+h1,h2,h3{text-align:center;margin-bottom:15px}
+input,select,button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+border:none;
+font-size:16px;
+}
+button{
+background:#ff9800;
+color:#000;
+font-weight:bold;
+cursor:pointer;
+}
+.error-card{
+background:#1e293b;
+margin:15px 0;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,.5);
+}
+.error-header {
+  display: flex;
+  justify-content: space-between; /* متن سمت چپ، علامت سمت راست */
+  align-items: center;
+  padding: 12px 15px;
+  cursor: pointer;
+  background:#27314d;
+  border-radius:15px 15px 0 0;
+}
+
+.error-header span:first-child {
+  font-size: 18px; /* متن بزرگتر */
+  font-weight: bold;
+}
+
+.error-header span:last-child {
+  font-size: 20px; /* علامت + بزرگتر */
+  font-weight: bold;
+  transition: transform 0.3s ease, opacity 0.2s ease, color 0.3s ease;
+  color: #ff9800;
+}
+
+.error-content-inner p {
+  font-size: 16px; /* متن کادر بزرگتر */
+  line-height: 1.5;
+}
+.error-content {
+  max-height: 0;
+  overflow: hidden;
+
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 15px;
+  background:#1e293b;
+  border-radius:10px;
+}
+.error-content.open {
+  max-height: 500px;  /* ارتفاع باز */
+  padding: 10px 15px;
+}
+
+.error-content-inner {
+  transform: none;      /* فقط برای fade */
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.error-content.open .error-content-inner {
+  opacity: 1;
+}
+code{
+display:block;
+background:#0f172a;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+color:#7fff00;
+white-space:pre-wrap;
+}
+.back-button{
+background:#00bcd4;
+margin-top:15px;
+}
+.search-box{
+background:#0f172a;
+color:#fff;
+border:1px solid #555;
+}
+.footer{
+text-align:center;
+margin-top:20px;
+font-size:14px;
+color:#ffebcd;
+}
+.not-found{
+text-align:center;
+margin-top:20px;
+background:#7f1d1d;
+padding:15px;
+border-radius:12px;
+}
+.not-found button{
+background:#22c55e;
+color:#000;
+}
+.error-header span:last-child {
+  display: inline-block;
+  transition: transform 0.3s ease, opacity 0.2s ease, color 0.3s ease;
+  font-weight: bold;
+  color: #ff9800; /* رنگ اولیه */
+}
+.error-header.open span:last-child {
+  color: #ff5252; /* وقتی باز شد */
+}
+</style>
+</head>
+
+<body>
+
+<div id="formSection">
+<h1>Codex Error</h1>
+<input type="text" id="username" placeholder="اسم شما">
+<select id="language">
+<option value="">انتخاب زبان</option>
+<option value="python">Python</option>
+<option value="php">PHP</option>
+<option value="js">JavaScript</option>
+</select>
+<button onclick="start()">نمایش ارورها</button>
+<div class="footer">ساخته شده توسط محمدرسول مخبریان با عشق برای همه برنامه نویسان ایران ❤️</div>
+</div>
+
+<div id="result"></div>
+
+<script>
+
+function escapeHTML(str){
+return str.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/"/g,'&quot;')
+.replace(/'/g,'&#039;');
+}
+
+const database = {
+  /* ================= PYTHON ================= */
+  python:[
+    {title:"IndentationError",solution:"این خطا به دلیل رعایت نکردن تورفتگی صحیح در بلاک‌های کد رخ می‌دهد. پایتون وابسته به فاصله است و هر بلاک باید دقیقاً با تعداد فاصله یکسان نوشته شود. استفاده ترکیبی از Tab و Space باعث ایجاد این خطا می‌شود. IDEهایی مثل PyCharm و VSCode گزینه Convert Tabs to Spaces دارند و استفاده از آن کمک می‌کند.",example1:"if True:\nprint('hi')",example2:"if True:\n    print('hi')"},
+    {title:"SyntaxError",solution:"این خطا زمانی رخ می‌دهد که ساختار دستوری کد اشتباه باشد. ممکن است پرانتز، کوتیشن یا ':' فراموش شده باشد. خط قبل از خط خطا را هم بررسی کن. استفاده از linters و IDEهای هوشمند باعث کاهش این خطا می‌شود.",example1:"print('hi'",example2:"print('hi')"},
+    {title:"NameError",solution:"زمانی رخ می‌دهد که متغیری قبل از تعریف استفاده شده باشد یا اشتباه تایپی در نام متغیر وجود داشته باشد. همیشه قبل از استفاده مقداردهی کن و نام متغیر را دقیق بررسی کن.",example1:"print(x)",example2:"x=5\nprint(x)"},
+    {title:"TypeError",solution:"این خطا زمانی رخ می‌دهد که عملیاتی روی نوع داده نامعتبر انجام شود، مثلا جمع عدد و رشته. قبل از انجام عملیات نوع داده‌ها را بررسی کن و در صورت نیاز از تبدیل‌های int(), str(), float() استفاده کن.",example1:"5+'5'",example2:"5+int('5')"},
+    {title:"IndexError",solution:"وقتی به اندیسی خارج از محدوده لیست دسترسی پیدا کنی، این خطا رخ می‌دهد. قبل از دسترسی طول لیست را بررسی کن یا از حلقه استفاده کن.",example1:"a=[1]\nprint(a[2])",example2:"print(a[0])"},
+    {title:"KeyError",solution:"وقتی کلیدی در دیکشنری وجود ندارد و به آن دسترسی پیدا کنی، KeyError رخ می‌دهد. بهتر است از if key in dict یا dict.get(key) استفاده کنی.",example1:"d={'a':1}\nd['b']",example2:"d.get('b')"},
+    {title:"ValueError",solution:"این خطا زمانی رخ می‌دهد که مقدار ورودی نامعتبر باشد. مثلا تبدیل رشته غیرعددی به int. قبل از تبدیل از try/except استفاده کن یا ورودی را بررسی کن.",example1:"int('a')",example2:"int('5')"},
+    {title:"ZeroDivisionError",solution:"تقسیم بر صفر تعریف نشده است. قبل از تقسیم بررسی کن مخرج صفر نباشد.",example1:"5/0",example2:"5/1"},
+    {title:"ImportError",solution:"این خطا زمانی رخ می‌دهد که ماژول پیدا نشود. مطمئن شو نام ماژول درست است و در صورت نیاز pip install ماژول را نصب کن.",example1:"import abcxyz",example2:"pip install module"},
+    {title:"AttributeError",solution:"این خطا وقتی رخ می‌دهد که متد یا ویژگی روی شیء اشتباه فراخوانی شود. مطمئن شو آن متد/ویژگی برای نوع داده موردنظر وجود دارد.",example1:"5.append()",example2:"[5].append(6)"},
+    {title:"FileNotFoundError",solution:"وقتی فایلی که می‌خوای باز کنی وجود نداشته باشد این خطا رخ می‌دهد. مسیر فایل را بررسی کن یا قبل از باز کردن وجود آن را کنترل کن.",example1:"open('a.txt')",example2:"open('a.txt','w')"},
+    {title:"ModuleNotFoundError",solution:"این خطا وقتی رخ می‌دهد که ماژول نصب نشده باشد. با pip نصب کن یا محیط مجازی فعال کن.",example1:"import flaskkk",example2:"pip install flask"},
+    {title:"RuntimeError",solution:"خطایی که در زمان اجرا رخ می‌دهد و معمولاً به شرایط خاص برنامه مرتبط است. بررسی کن که منطق برنامه درست باشد.",example1:"raise RuntimeError()",example2:"بررسی شرط قبل اجرا"},
+    {title:"OverflowError",solution:"زمانی رخ می‌دهد که عدد بسیار بزرگ باشد و از محدوده پشتیبانی خارج شود. از الگوریتم یا عدد کوچک‌تر استفاده کن.",example1:"math.exp(1000)",example2:"عدد کوچکتر"},
+    {title:"RecursionError",solution:"این خطا زمانی رخ می‌دهد که تابع بازگشتی شرط توقف نداشته باشد و بی‌نهایت اجرا شود. حتماً یک شرط پایان مشخص کن.",example1:"def f():f()",example2:"شرط توقف اضافه کن"},
+    {title:"StopIteration",solution:"زمانی رخ می‌دهد که next() روی iterator که تمام شده صدا زده شود. قبل از next بررسی کن که عنصر وجود داشته باشد.",example1:"next(iter([]))",example2:"iter([1])\nnext(iter([1]))"},
+    {title:"TabError",solution:"این خطا وقتی رخ می‌دهد که تورفتگی با ترکیب Tab و Space انجام شده باشد. همیشه از یک نوع فاصله استفاده کن و IDE را تنظیم کن.",example1:"if True:\n\tprint('hi')",example2:"if True:\n    print('hi')"},
+    {title:"UnboundLocalError",solution:"این خطا زمانی رخ می‌دهد که متغیری محلی قبل از مقداردهی استفاده شود. مطمئن شو مقداردهی قبل از استفاده انجام شده باشد.",example1:"def f():\n print(x)\n x=5",example2:"def f():\n x=5\n print(x)"},
+    {title:"AssertionError",solution:"زمانی رخ می‌دهد که شرط assert برقرار نباشد. بررسی کن شرط منطقی درست باشد یا پیام مناسب بده.",example1:"assert 2>3",example2:"assert 3>2"},
+    {title:"KeyboardInterrupt",solution:"این خطا وقتی رخ می‌دهد که کاربر اجرای برنامه را با Ctrl+C متوقف کند. می‌توان از try/except برای مدیریت استفاده کرد.",example1:"while True: pass",example2:"try:\n while True: pass\nexcept KeyboardInterrupt:\n print('Stopped')"}
+  ],
+
+  /* ================= PHP ================= */
+  php:[
+    {title:"Parse error",solution:"این خطا وقتی رخ می‌دهد که ساختار کد اشتباه باشد. اغلب ; یا } یا ) فراموش شده است. خط قبل را بررسی کن و IDE می‌تواند کمک کند.",example1:"echo 'hi'",example2:"echo 'hi';"},
+    {title:"Undefined variable",solution:"متغیری قبل از مقداردهی استفاده شده است. قبل از استفاده مقداردهی کن یا از isset() استفاده کن.",example1:"echo $a;",example2:"$a=5; echo $a;"},
+    {title:"Undefined index",solution:"دسترسی به ایندکس آرایه که وجود ندارد. از isset() یا null coalescing استفاده کن.",example1:"$_GET['x']",example2:"isset($_GET['x'])"},
+    {title:"Fatal error",solution:"خطای جدی که اجرای برنامه را متوقف می‌کند. معمولاً تابع یا کلاس تعریف نشده است.",example1:"call()",example2:"تعریف تابع"},
+    {title:"Warning include",solution:"فایل include پیدا نشده است. مسیر فایل را بررسی کن یا file_exists() استفاده کن.",example1:"include 'a.php';",example2:"file_exists()"},
+    {title:"Division by zero",solution:"تقسیم بر صفر مجاز نیست. قبل از تقسیم بررسی کن.",example1:"5/0;",example2:"5/1;"},
+    {title:"Type error",solution:"نوع پارامتر اشتباه است. قبل از فراخوانی نوع داده را بررسی کن.",example1:"function a(int $x){}",example2:"ارسال عدد"},
+    {title:"Call undefined",solution:"تابع یا متدی وجود ندارد. قبل از استفاده تعریف کن یا فایل مربوطه را include کن.",example1:"abc();",example2:"تعریف abc"},
+    {title:"Headers sent",solution:"قبل از header هیچ خروجی چاپ نشود. echo یا فضای خالی قبل header حذف شود.",example1:"echo 'a'; header()",example2:"header قبل echo"},
+    {title:"Memory exhausted",solution:"حافظه پر شده است. حلقه‌های بی‌نهایت یا داده‌های سنگین را بررسی کن و memory_limit را افزایش بده.",example1:"loop",example2:"بهینه سازی"},
+    {title:"Deprecated",solution:"از تابع قدیمی استفاده شده که دیگر توصیه نمی‌شود. نسخه جدید را جایگزین کن.",example1:"mysql_query()",example2:"mysqli"},
+    {title:"Session error",solution:"قبل از استفاده از سشن باید session_start() فراخوانی شود.",example1:"$_SESSION",example2:"session_start()"},
+    {title:"Upload error",solution:"آپلود فایل مشکل دارد. حجم فایل و php.ini بررسی شود.",example1:"file زیاد",example2:"تنظیم php.ini"},
+    {title:"SQL error",solution:"کوئری SQL اشتباه نوشته شده است. دستورات و جدول‌ها را بررسی کن.",example1:"SELECT * FORM",example2:"FROM"},
+    {title:"Permission denied",solution:"دسترسی لازم برای فایل یا پوشه موجود نیست. با chmod تنظیم کن.",example1:"file write",example2:"chmod"},
+    {title:"Undefined function",solution:"تابع تعریف نشده است. قبل از استفاده تعریف کن یا include کن.",example1:"foo();",example2:"function foo(){}"},
+    {title:"Class not found",solution:"کلاس موردنظر تعریف نشده یا نام اشتباه است. بررسی کن نام درست باشد.",example1:"new Bar();",example2:"class Bar{}"},
+    {title:"Cannot redeclare",solution:"کلاس یا تابعی دوباره تعریف شده است. نام‌ها را بررسی کن.",example1:"function a(){} function a(){}",example2:"نام متفاوت بده"},
+    {title:"Unknown column",solution:"ستون در دیتابیس وجود ندارد. نام ستون را بررسی کن.",example1:"SELECT x FROM t",example2:"ستون صحیح"},
+    {title:"Division warning",solution:"هشدار تقسیم. قبل از تقسیم بررسی کن که مخرج صفر نباشد.",example1:"5/0;",example2:"5/1;"}
+  ],
+
+  /* ================= JS ================= */
+  js:[
+    {title:"SyntaxError",solution:"ساختار کد جاوااسکریپت اشتباه است. پرانتز و براکت‌ها را بررسی کن. IDE و linters کمک می‌کنند.",example1:"console.log('hi'",example2:"console.log('hi');"},
+    {title:"ReferenceError",solution:"متغیر تعریف نشده است. قبل از استفاده با let یا const تعریف کن.",example1:"console.log(x)",example2:"let x=5;"},
+    {title:"TypeError",solution:"متدی روی نوع داده اشتباه فراخوانی شده است. نوع داده را بررسی کن و در صورت نیاز تبدیل کن.",example1:"5.toUpperCase()",example2:"String(5).toUpperCase()"},
+    {title:"RangeError",solution:"مقدار خارج از محدوده مجاز است. ورودی‌ها را بررسی کن.",example1:"new Array(-1)",example2:"new Array(1)"},
+    {title:"URIError",solution:"توابع encode/decode ورودی معتبر ندارند. URI را بررسی کن.",example1:"decodeURI('%')",example2:"decodeURI('%20')"},
+    {title:"EvalError",solution:"استفاده نادرست از eval. بهتر است استفاده نشود.",example1:"eval غلط",example2:"عدم استفاده"},
+    {title:"Undefined",solution:"متغیر مقدار ندارد. قبل از استفاده مقداردهی کن.",example1:"let a;",example2:"a=5"},
+    {title:"Null error",solution:"دسترسی به ویژگی null باعث خطا می‌شود. قبل از استفاده بررسی کن.",example1:"null.x",example2:"بررسی null"},
+    {title:"Promise error",solution:"پرومیس reject شده و catch ندارد. از catch یا try/catch در async استفاده کن.",example1:"reject()",example2:"catch()"},
+    {title:"JSON error",solution:"ساختار JSON اشتباه است. براکت‌ها و کوتیشن‌ها را بررسی کن.",example1:"JSON.parse('{')",example2:"JSON درست"},
+    {title:"NaN",solution:"نتیجه عملیات عددی معتبر نیست. با isNaN بررسی کن.",example1:"0/0",example2:"isNaN()"},
+    {title:"Infinite loop",solution:"حلقه شرط توقف ندارد و باعث هنگ کردن می‌شود. شرط خروج اضافه کن.",example1:"while(true){}",example2:"شرط توقف"},
+    {title:"DOM null",solution:"المنت موردنظر در DOM وجود ندارد. بعد از load اجرا کن یا بررسی کن وجود داشته باشد.",example1:"getElementById('x')",example2:"بررسی وجود"},
+    {title:"Fetch error",solution:"درخواست شبکه شکست خورده است. از catch استفاده کن و response را بررسی کن.",example1:"fetch()",example2:"catch()"},
+    {title:"CORS error",solution:"مرورگر اجازه دسترسی به API خارجی نمی‌دهد. باید در سمت سرور تنظیم شود.",example1:"API خارجی",example2:"تنظیم سرور"},
+    {title:"EventListener error",solution:"ثبت EventListener روی المنتی که وجود ندارد باعث خطا می‌شود. مطمئن شو المنت قبل از addEventListener وجود دارد.",example1:"document.getElementById('x').addEventListener('click',fn);",example2:"const el=document.getElementById('x'); if(el) el.addEventListener('click',fn);"},
+    {title:"Type coercion error",solution:"جاوااسکریپت هنگام تبدیل نوع داده به شکل غیرمنتظره عمل می‌کند. نوع داده را بررسی کن یا از Number()/String() استفاده کن.",example1:"5+'5'",example2:"5+Number('5')"},
+    {title:"Async error",solution:"در توابع async اگر promise reject شود و catch نداشته باشد خطا رخ می‌دهد. همیشه از try/catch یا catch استفاده کن.",example1:"async function f(){throw 'err'}",example2:"async function f(){try{}catch{}}"},
+    {title:"LocalStorage error",solution:"دسترسی به LocalStorage ممکن است محدود شده باشد یا فضای کافی نباشد. قبل از setItem بررسی کن.",example1:"localStorage.setItem('x','y')",example2:"if(window.localStorage) localStorage.setItem('x','y');"},
+    {title:"RegExp error",solution:"ساختار RegExp اشتباه است. بررسی کن الگو صحیح باشد.",example1:"new RegExp('[')",example2:"new RegExp('\\[')"}
+  ]
+};
+
+function toggleContent(id){
+    let el = document.getElementById(id);
+    let header = el.previousElementSibling;
+    let icon = header.querySelector("span:last-child");
+
+    el.classList.toggle("open");
+    header.classList.toggle("open");
+
+    icon.style.transform = "scale(0.5) rotate(180deg)";
+    icon.style.opacity = "0";
+
+    setTimeout(()=>{
+        icon.textContent = el.classList.contains("open") ? "×" : "+";
+        icon.style.transform = "scale(1) rotate(0deg)";
+        icon.style.opacity = "1";
+    },150);
+}
+
+function filterErrors(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let found=false;
+
+document.querySelectorAll(".error-card").forEach(card=>{
+if(card.innerText.toLowerCase().includes(input)){
+card.style.display="block";
+found=true;
+}else{
+card.style.display="none";
+}
+});
+
+let old=document.getElementById("notFoundBox");
+if(old) old.remove();
+
+if(input && !found){
+let box=document.createElement("div");
+box.className="not-found";
+box.id="notFoundBox";
+box.innerHTML=`
+❌ اروری پیدا نشد
+<br><br>
+<button onclick="window.open('https://www.google.com/search?q=${input}','_blank')">
+جستجو در گوگل
+</button>
+`;
+document.getElementById("result").appendChild(box);
+}
+}
+
+function start(){
+    let name = document.getElementById("username").value;
+    let lang = document.getElementById("language").value;
+    if(!name || !lang){ alert("همه فیلدها را پر کن"); return; }
+
+    document.getElementById("formSection").style.display = "none";
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "";
+
+    let html = `<h2>سلام ${name}</h2>
+<h3>۱۵ ارور رایج ${lang.toUpperCase()}</h3>
+<button class="back-button" onclick="goBack()">بازگشت</button>
+<input class="search-box" id="searchInput" onkeyup="filterErrors()" placeholder="جستجو">
+`;
+
+    if(!database[lang]){
+        resultDiv.innerHTML = "<h2>دیتایی برای این زبان وجود ندارد</h2>";
+        return;
+    }
+
+    database[lang].forEach((e,i)=>{
+        html += `
+<div class="error-card">
+  <div class="error-header" onclick="toggleContent('c${i}')">
+    <span>${e.title}</span>
+    <span style="float:right">+</span>
+  </div>
+  <div class="error-content" id="c${i}">
+    <div class="error-content-inner">
+      <p>${e.solution}</p>
+      <code>❌ ${escapeHTML(e.example1)}</code>
+      <code>✅ ${escapeHTML(e.example2)}</code>
+    </div>
+  </div>
+</div>
+`;
+    });
+
+    html += `<div class="footer">ساخته شده توسط محمدرسول مخبریان با عشق برای همه برنامه نویسان ایران ❤️</div>`;
+    resultDiv.innerHTML = html;
+}
+
+function goBack(){
+document.getElementById("result").innerHTML="";
+document.getElementById("formSection").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
