@@ -140,6 +140,8 @@ color:#000;
 <option value="python">Python</option>
 <option value="php">PHP</option>
 <option value="js">JavaScript</option>
+<option value="c">C</option>
+<option value="cpp">C++</option>
 </select>
 <button onclick="start()">نمایش ارورها</button>
 <div class="footer">ساخته شده توسط محمدرسول مخبریان با عشق برای همه برنامه نویسان ایران ❤️</div>
@@ -228,7 +230,191 @@ const database = {
     {title:"Async error",solution:"در توابع async اگر promise reject شود و catch نداشته باشد خطا رخ می‌دهد. همیشه از try/catch یا catch استفاده کن.",example1:"async function f(){throw 'err'}",example2:"async function f(){try{}catch{}}"},
     {title:"LocalStorage error",solution:"دسترسی به LocalStorage ممکن است محدود شده باشد یا فضای کافی نباشد. قبل از setItem بررسی کن.",example1:"localStorage.setItem('x','y')",example2:"if(window.localStorage) localStorage.setItem('x','y');"},
     {title:"RegExp error",solution:"ساختار RegExp اشتباه است. بررسی کن الگو صحیح باشد.",example1:"new RegExp('[')",example2:"new RegExp('\\[')"}
-  ]
+  ],
+c: [
+{
+title: "Missing Semicolon",
+solution: "در C هر دستور باید با ; تمام شود. اگر فراموش شود کامپایلر خطا می‌دهد.",
+example1: "int x = 10",  // ❌ بدون سمی‌کالن
+example2: "int x = 10;"  // ✅ صحیح
+},
+{
+title: "Undeclared Variable",
+solution: "قبل از استفاده از هر متغیر باید نوع آن را مشخص کنی. مثلا int یا float.",
+example1: "x = 5;",  // ❌ بدون تعریف
+example2: "int x = 5;"  // ✅ تعریف شده
+},
+{
+title: "Array Out of Bounds",
+solution: "آرایه‌ها از اندیس 0 شروع می‌شوند. اگر اندازه 3 باشد، آخرین اندیس 2 است.",
+example1: "int arr[3]; arr[3]=10;", // ❌ خارج از محدوده
+example2: "int arr[3]; arr[2]=10;" // ✅ در محدوده
+},
+{
+title: "Division by Zero",
+solution: "قبل از تقسیم بررسی کن که مخرج صفر نباشد.",
+example1: "int a = 5 / 0;", // ❌ تقسیم بر صفر
+example2: "if(b!=0) { int a = 5 / b; }" // ✅ بررسی مخرج
+},
+{
+title: "Wrong Format Specifier",
+solution: "در printf باید از فرمت درست استفاده شود: %d برای int، %f برای float.",
+example1: 'printf("%d", 3.14);', // ❌ فرمت اشتباه
+example2: 'printf("%f", 3.14);' // ✅ فرمت صحیح
+},
+{
+title: "Uninitialized Variable",
+solution: "اگر متغیر مقدار اولیه نداشته باشد، مقدار تصادفی می‌گیرد.",
+example1: "int x; printf(\"%d\", x);", // ❌ بدون مقداردهی
+example2: "int x = 0; printf(\"%d\", x);" // ✅ مقداردهی اولیه
+},
+{
+title: "Pointer Not Initialized",
+solution: "اشاره‌گر باید به یک آدرس معتبر اشاره کند.",
+example1: "int *p; *p = 5;", // ❌ اشاره‌گر NULL
+example2: "int x = 5; int *p = &x;" // ✅ اشاره‌گر درست
+},
+{
+title: "Segmentation Fault",
+solution: "دسترسی به حافظه غیرمجاز باعث این خطا می‌شود. مطمئن شو اشاره‌گر NULL نیست.",
+example1: "int *p = NULL; *p = 5;", // ❌ NULL دسترسی
+example2: "if(p!=NULL) *p = 5;" // ✅ بررسی قبل استفاده
+},
+{
+title: "Memory Leak",
+solution: "اگر malloc استفاده کردی باید free هم بزنی تا حافظه آزاد شود.",
+example1: "int* p = malloc(sizeof(int));", // ❌ بدون free
+example2: "int* p = malloc(sizeof(int)); free(p);" // ✅ آزادسازی
+},
+{
+title: "Infinite Loop",
+solution: "حلقه باید شرط خروج داشته باشد و متغیر تغییر کند.",
+example1: "while(i<5){}", // ❌ بی‌پایان
+example2: "while(i<5){ i++; }" // ✅ شرط خروج
+},
+{
+title: "Missing Header File",
+solution: "برای استفاده از توابع استاندارد C باید include کنی.",
+example1: "printf(\"Hi\");", // ❌ بدون include
+example2: "#include <stdio.h>\nprintf(\"Hi\");" // ✅ include درست
+},
+{
+title: "Using gets()",
+solution: "تابع gets ناامن است. از fgets استفاده کن.",
+example1: "gets(name);", // ❌ ناامن
+example2: "fgets(name, 50, stdin);" // ✅ ایمن
+},
+{
+title: "Buffer Overflow",
+solution: "اندازه ورودی را محدود کن تا از آرایه بزرگ‌تر نشود.",
+example1: "char name[5]; scanf(\"%s\", name);", // ❌ ممکنه سرریز بشه
+example2: "char name[5]; scanf(\"%4s\", name);" // ✅ محدودیت طول
+},
+{
+title: "Assignment Instead of Comparison",
+solution: "در شرط‌ها از == برای مقایسه استفاده کن نه =.",
+example1: "if(x = 5)", // ❌ اشتباه
+example2: "if(x == 5)" // ✅ صحیح
+},
+{
+title: "Missing return",
+solution: "توابع غیر void باید مقدار برگردانند.",
+example1: "int sum(){ int a = 5; }", // ❌ بدون return
+example2: "int sum(){ return 5; }" // ✅ return اضافه شده
+}
+],
+cpp: [
+{
+title: "Missing iostream",
+solution: "برای استفاده از cout و cin باید iostream را include کنی.",
+example1: 'cout << "Hi";', // ❌ بدون include
+example2: '#include <iostream>\nusing namespace std;\ncout << "Hi";' // ✅ include درست
+},
+{
+title: "Missing Semicolon",
+solution: "در C++ هم هر دستور باید با ; تمام شود.",
+example1: "int x = 5", // ❌ بدون سمی‌کالن
+example2: "int x = 5;" // ✅ صحیح
+},
+{
+title: "Using = Instead of ==",
+solution: "برای مقایسه در شرط‌ها از == استفاده کن.",
+example1: "if(x = 10)", // ❌ اشتباه
+example2: "if(x == 10)" // ✅ صحیح
+},
+{
+title: "No Return in Function",
+solution: "توابع غیر void باید return داشته باشند.",
+example1: "int sum(){ int a = 5; }", // ❌ بدون return
+example2: "int sum(){ return 5; }" // ✅ return اضافه شده
+},
+{
+title: "Memory Leak",
+solution: "اگر new کردی باید delete بزنی تا حافظه آزاد شود.",
+example1: "int* p = new int;", // ❌ بدون delete
+example2: "int* p = new int; delete p;" // ✅ آزادسازی
+},
+{
+title: "Dangling Pointer",
+solution: "بعد از delete مقدار اشاره‌گر را NULL کن.",
+example1: "delete p; *p = 5;", // ❌ دسترسی بعد از delete
+example2: "delete p; p = NULL;" // ✅ NULL کردن اشاره‌گر
+},
+{
+title: "Accessing Private Member",
+solution: "اعضای private را مستقیم نمی‌توان استفاده کرد، از getter یا setter استفاده کن.",
+example1: "obj.x = 5;", // ❌ مستقیم
+example2: "obj.setX(5);" // ✅ از متد عمومی
+},
+{
+title: "No Default Constructor",
+solution: "اگر constructor پارامتردار ساختی، نسخه بدون پارامتر هم تعریف کن.",
+example1: "MyClass obj;", // ❌ بدون constructor پیش‌فرض
+example2: "MyClass(){ }" // ✅ constructor پیش‌فرض
+},
+{
+title: "Stack Overflow",
+solution: "در recursion شرط پایان بگذار.",
+example1: "void f(){ f(); }", // ❌ بی‌نهایت
+example2: "void f(int n){ if(n==0) return; f(n-1); }" // ✅ شرط توقف
+},
+{
+title: "Namespace Conflict",
+solution: "از std:: استفاده کن یا using namespace std;",
+example1: "cout << 5;", // ❌ بدون std::
+example2: "std::cout << 5;" // ✅ درست
+},
+{
+title: "Wrong Use of cin",
+solution: "برای رشته با فاصله از getline استفاده کن.",
+example1: "cin >> name;", // ❌ فقط یک کلمه می‌گیرد
+example2: "getline(cin, name);" // ✅ کل خط
+},
+{
+title: "Multiple Definition",
+solution: "در فایل هدر از #ifndef استفاده کن تا چندباره تعریف نشود.",
+example1: "function defined twice", // ❌ تعریف چندباره
+example2: "#ifndef FILE_H\n#define FILE_H\n#endif" // ✅ محافظت شده
+},
+{
+title: "Type Conversion Error",
+solution: "برای تبدیل امن از static_cast استفاده کن.",
+example1: "int x = 3.14;", // ❌ هشدار تبدیل
+example2: "int x = static_cast<int>(3.14);" // ✅ تبدیل امن
+},
+{
+title: "Missing Virtual Destructor",
+solution: "در کلاس‌های پایه destructor را virtual تعریف کن.",
+example1: "~Base(){}", // ❌ غیر virtual
+example2: "virtual ~Base(){}" // ✅ virtual
+},
+{
+title: "Uninitialized Object",
+solution: "در constructor مقداردهی اولیه انجام بده.",
+example1: "int x;", // ❌ بدون مقداردهی
+example2: "MyClass():x(0){}" // ✅ مقداردهی اولیه
+}
+],
 };
 
 function toggleContent(id){
@@ -250,34 +436,35 @@ function toggleContent(id){
 }
 
 function filterErrors(){
-let input=document.getElementById("searchInput").value.toLowerCase();
-let found=false;
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let lang = document.getElementById("language").value; // زبان فعلی
+    let found = false;
 
-document.querySelectorAll(".error-card").forEach(card=>{
-if(card.innerText.toLowerCase().includes(input)){
-card.style.display="block";
-found=true;
-}else{
-card.style.display="none";
-}
-});
+    document.querySelectorAll(".error-card").forEach(card=>{
+        if(card.innerText.toLowerCase().includes(input)){
+            card.style.display="block";
+            found = true;
+        } else {
+            card.style.display="none";
+        }
+    });
 
-let old=document.getElementById("notFoundBox");
-if(old) old.remove();
+    let old = document.getElementById("notFoundBox");
+    if(old) old.remove();
 
-if(input && !found){
-let box=document.createElement("div");
-box.className="not-found";
-box.id="notFoundBox";
-box.innerHTML=`
+    if(input && !found){
+        let box = document.createElement("div");
+        box.className = "not-found";
+        box.id = "notFoundBox";
+        box.innerHTML = `
 ❌ اروری پیدا نشد
 <br><br>
-<button onclick="window.open('https://www.google.com/search?q=${input}','_blank')">
+<button onclick="window.open('https://www.google.com/search?q=ارور+${encodeURIComponent(input)}+ زبان برنامه نویسی برای+${encodeURIComponent(lang)}','_blank')">
 جستجو در گوگل
 </button>
 `;
-document.getElementById("result").appendChild(box);
-}
+        document.getElementById("result").appendChild(box);
+    }
 }
 
 function start(){
