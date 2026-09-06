@@ -3,160 +3,834 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codex Error</title>
+<title>Codex Error - راهنمای خطاهای برنامه نویسی</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:tahoma}
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Vazirmatn',tahoma,sans-serif;}
+
+:root{
+--bg-primary:#0b1120;
+--bg-secondary:#111827;
+--bg-card:#1e293b;
+--bg-header:#1e293b;
+--accent:#f97316;
+--accent-hover:#ea580c;
+--accent-light:#ffedd5;
+--text-primary:#f1f5f9;
+--text-secondary:#94a3b8;
+--text-muted:#64748b;
+--border:#334155;
+--success:#10b981;
+--danger:#ef4444;
+--info:#06b6d4;
+--purple:#8b5cf6;
+--pink:#ec4899;
+--gradient:linear-gradient(135deg,#f97316,#ea580c,#dc2626);
+--shadow:0 4px 6px -1px rgba(0,0,0,.3),0 2px 4px -2px rgba(0,0,0,.3);
+--shadow-lg:0 10px 15px -3px rgba(0,0,0,.4),0 4px 6px -4px rgba(0,0,0,.4);
+--radius:12px;
+--radius-lg:20px;
+}
+
 body{
-background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+background:var(--bg-primary);
+color:var(--text-primary);
+min-height:100vh;
+direction:rtl;
+}
+
+/* ===== اسکرول ===== */
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--bg-primary);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+
+/* ===== هدر ===== */
+.site-header{
+background:var(--bg-secondary);
+border-bottom:1px solid var(--border);
+padding:15px 0;
+position:sticky;
+top:0;
+z-index:100;
+backdrop-filter:blur(10px);
+}
+.header-inner{
+max-width:1200px;
+margin:0 auto;
+padding:0 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:24px;
+font-weight:900;
+background:var(--gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.logo i{font-size:28px;}
+.header-actions{display:flex;gap:10px;align-items:center;}
+.header-btn{
+background:transparent;
+border:1px solid var(--border);
+color:var(--text-secondary);
+padding:8px 16px;
+border-radius:var(--radius);
+cursor:pointer;
+font-size:14px;
+transition:all .3s;
+width:auto;
+margin:0;
+}
+.header-btn:hover{
+border-color:var(--accent);
+color:var(--accent);
+}
+
+/* ===== فرم ورود ===== */
+#formSection{
+max-width:500px;
+margin:80px auto;
+padding:40px;
+background:var(--bg-secondary);
+border-radius:var(--radius-lg);
+border:1px solid var(--border);
+box-shadow:var(--shadow-lg);
+}
+#formSection h1{
+font-size:32px;
+font-weight:900;
+background:var(--gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:5px;
+}
+.subtitle{
+color:var(--text-muted);
+text-align:center;
+margin-bottom:30px;
+font-size:14px;
+}
+.form-group{margin-bottom:20px;}
+.form-group label{
+display:block;
+margin-bottom:6px;
+font-size:13px;
+color:var(--text-secondary);
+font-weight:500;
+}
+.form-group input,.form-group select{
+width:100%;
+padding:14px 16px;
+background:var(--bg-primary);
+border:1px solid var(--border);
+border-radius:var(--radius);
+color:var(--text-primary);
+font-size:15px;
+transition:all .3s;
+margin:0;
+}
+.form-group input:focus,.form-group select:focus{
+outline:none;
+border-color:var(--accent);
+box-shadow:0 0 0 3px rgba(249,115,22,.15);
+}
+.form-group input::placeholder{color:var(--text-muted);}
+.submit-btn{
+width:100%;
+padding:16px;
+background:var(--gradient);
+border:none;
+border-radius:var(--radius);
 color:#fff;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:all .3s;
+margin:10px 0 0;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(249,115,22,.3);}
+.footer-text{
+text-align:center;
+margin-top:25px;
+font-size:13px;
+color:var(--text-muted);
+}
+.footer-text i{color:var(--danger);}
+
+/* ===== محتوای اصلی ===== */
+.main-container{
+max-width:900px;
+margin:0 auto;
 padding:20px;
 }
-h1,h2,h3{text-align:center;margin-bottom:15px}
-input,select,button{
-width:100%;
-padding:12px;
-margin:8px 0;
-border-radius:8px;
+
+/* ===== پروفایل هدر ===== */
+.profile-header{
+background:var(--bg-secondary);
+border-radius:var(--radius-lg);
+padding:30px;
+border:1px solid var(--border);
+margin-bottom:25px;
+box-shadow:var(--shadow);
+}
+.profile-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:15px;
+}
+.profile-info h2{font-size:24px;font-weight:700;}
+.profile-info h2 span{color:var(--accent);}
+.profile-info p{color:var(--text-muted);font-size:14px;margin-top:4px;}
+.profile-badge{
+display:flex;
+align-items:center;
+gap:8px;
+background:rgba(249,115,22,.1);
+border:1px solid rgba(249,115,22,.2);
+padding:8px 16px;
+border-radius:50px;
+color:var(--accent);
+font-size:13px;
+font-weight:500;
+}
+.profile-badge i{font-size:16px;}
+
+/* ===== آمار ===== */
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:12px;
+margin:20px 0;
+}
+.stat-card{
+background:var(--bg-card);
+border-radius:var(--radius);
+padding:18px;
+text-align:center;
+border:1px solid var(--border);
+transition:all .3s;
+}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.stat-card .num{
+font-size:28px;
+font-weight:900;
+background:var(--gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.stat-card .label{font-size:12px;color:var(--text-muted);margin-top:4px;}
+
+/* ===== نوار پیشرفت ===== */
+.progress-section{margin:20px 0;}
+.progress-label{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:var(--text-secondary);
+margin-bottom:6px;
+}
+.progress-track{
+background:var(--bg-card);
+border-radius:50px;
+height:8px;
+overflow:hidden;
+border:1px solid var(--border);
+}
+.progress-fill{
+height:100%;
+background:var(--gradient);
+border-radius:50px;
+transition:width .8s ease;
+}
+
+/* ===== دکمه‌های اکشن ===== */
+.actions-grid{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin:20px 0;
+justify-content:center;
+}
+.action-btn{
+padding:10px 20px;
+border-radius:var(--radius);
+border:1px solid var(--border);
+background:var(--bg-card);
+color:var(--text-secondary);
+cursor:pointer;
+font-size:13px;
+font-weight:500;
+transition:all .3s;
+width:auto;
+margin:0;
+display:inline-flex;
+align-items:center;
+gap:6px;
+}
+.action-btn:hover{
+border-color:var(--accent);
+color:var(--accent);
+background:rgba(249,115,22,.05);
+transform:translateY(-1px);
+}
+.action-btn.primary{
+background:var(--gradient);
+color:#fff;
 border:none;
+}
+.action-btn.primary:hover{box-shadow:0 4px 15px rgba(249,115,22,.3);}
+.action-btn.success{color:var(--success);}
+.action-btn.success:hover{border-color:var(--success);background:rgba(16,185,129,.05);}
+.action-btn.info{color:var(--info);}
+.action-btn.info:hover{border-color:var(--info);background:rgba(6,182,212,.05);}
+.action-btn.purple{color:var(--purple);}
+.action-btn.purple:hover{border-color:var(--purple);background:rgba(139,92,246,.05);}
+.action-btn.pink{color:var(--pink);}
+.action-btn.pink:hover{border-color:var(--pink);background:rgba(236,72,153,.05);}
+.action-btn.warning{color:var(--accent);}
+.action-btn.warning:hover{border-color:var(--accent);background:rgba(249,115,22,.05);}
+
+/* ===== جستجو ===== */
+.search-wrapper{
+position:relative;
+margin:20px 0;
+}
+.search-wrapper i{
+position:absolute;
+right:16px;
+top:50%;
+transform:translateY(-50%);
+color:var(--text-muted);
 font-size:16px;
 }
-button{
-background:#ff9800;
-color:#000;
-font-weight:bold;
-cursor:pointer;
+.search-wrapper input{
+width:100%;
+padding:14px 45px 14px 16px;
+background:var(--bg-card);
+border:1px solid var(--border);
+border-radius:var(--radius);
+color:var(--text-primary);
+font-size:15px;
+transition:all .3s;
+margin:0;
 }
+.search-wrapper input:focus{
+outline:none;
+border-color:var(--accent);
+box-shadow:0 0 0 3px rgba(249,115,22,.1);
+}
+.search-wrapper input::placeholder{color:var(--text-muted);}
+
+/* ===== کارت ارور ===== */
 .error-card{
-background:#1e293b;
-margin:15px 0;
-border-radius:15px;
+background:var(--bg-card);
+margin:12px 0;
+border-radius:var(--radius);
 overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,.5);
+border:1px solid var(--border);
+transition:all .3s;
 }
-.error-header {
-  display: flex;
-  justify-content: space-between; /* متن سمت چپ، علامت سمت راست */
-  align-items: center;
-  padding: 12px 15px;
-  cursor: pointer;
-  background:#27314d;
-  border-radius:15px 15px 0 0;
+.error-card:hover{border-color:rgba(249,115,22,.3);}
+.error-card.bookmarked{
+border-right:4px solid var(--accent);
 }
-
-.error-header span:first-child {
-  font-size: 18px; /* متن بزرگتر */
-  font-weight: bold;
+.error-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px 20px;
+cursor:pointer;
+background:var(--bg-header);
+transition:all .3s;
+user-select:none;
 }
-
-.error-header span:last-child {
-  font-size: 20px; /* علامت + بزرگتر */
-  font-weight: bold;
-  transition: transform 0.3s ease, opacity 0.2s ease, color 0.3s ease;
-  color: #ff9800;
+.error-header:hover{background:rgba(249,115,22,.05);}
+.error-header .title{
+font-size:16px;
+font-weight:700;
+display:flex;
+align-items:center;
+gap:8px;
 }
-
-.error-content-inner p {
-  font-size: 16px; /* متن کادر بزرگتر */
-  line-height: 1.5;
+.error-header .title .bookmark-icon{color:var(--accent);}
+.error-header .icon{
+font-size:18px;
+font-weight:700;
+color:var(--accent);
+transition:all .3s;
+display:flex;
+align-items:center;
+justify-content:center;
+width:28px;
+height:28px;
+border-radius:50%;
+background:rgba(249,115,22,.1);
 }
-.error-content {
-  max-height: 0;
-  overflow: hidden;
-
-  transition: max-height 0.35s ease, padding 0.35s ease;
-  padding: 0 15px;
-  background:#1e293b;
-  border-radius:10px;
+.error-header.open .icon{
+color:var(--danger);
+background:rgba(239,68,68,.1);
+transform:rotate(45deg);
 }
-.error-content.open {
-  max-height: 500px;  /* ارتفاع باز */
-  padding: 10px 15px;
+.error-content{
+max-height:0;
+overflow:hidden;
+transition:max-height .4s ease,padding .4s ease;
+padding:0 20px;
+background:var(--bg-card);
 }
-
-.error-content-inner {
-  transform: none;      /* فقط برای fade */
-  opacity: 0;
-  transition: opacity 0.35s ease;
+.error-content.open{
+max-height:600px;
+padding:16px 20px;
 }
-
-.error-content.open .error-content-inner {
-  opacity: 1;
-}
-code{
-display:block;
-background:#0f172a;
-padding:10px;
-margin:10px 0;
-border-radius:8px;
-color:#7fff00;
-white-space:pre-wrap;
-}
-.back-button{
-background:#00bcd4;
-margin-top:15px;
-}
-.search-box{
-background:#0f172a;
-color:#fff;
-border:1px solid #555;
-}
-.footer{
-text-align:center;
-margin-top:20px;
+.error-content-inner{opacity:0;transition:opacity .4s ease;}
+.error-content.open .error-content-inner{opacity:1;}
+.error-content p{
 font-size:14px;
-color:#ffebcd;
+line-height:1.8;
+color:var(--text-secondary);
+margin-bottom:12px;
 }
-.not-found{
+.code-block{
+background:var(--bg-primary);
+border-radius:8px;
+padding:12px 16px;
+margin:8px 0;
+border:1px solid var(--border);
+position:relative;
+}
+.code-block .code-label{
+font-size:11px;
+color:var(--text-muted);
+margin-bottom:6px;
+display:flex;
+align-items:center;
+gap:6px;
+}
+.code-block .code-label .badge{
+padding:2px 8px;
+border-radius:4px;
+font-size:10px;
+font-weight:700;
+}
+.code-block .code-label .badge.danger{background:rgba(239,68,68,.15);color:var(--danger);}
+.code-block .code-label .badge.success{background:rgba(16,185,129,.15);color:var(--success);}
+.code-block code{
+display:block;
+color:#7fff00;
+font-family:'Courier New',monospace;
+font-size:13px;
+white-space:pre-wrap;
+direction:ltr;
+text-align:left;
+}
+.code-actions{
+display:flex;
+gap:6px;
+margin-top:8px;
+flex-wrap:wrap;
+}
+.code-actions button{
+padding:6px 12px;
+border-radius:6px;
+border:1px solid var(--border);
+background:transparent;
+color:var(--text-muted);
+cursor:pointer;
+font-size:12px;
+transition:all .3s;
+width:auto;
+margin:0;
+}
+.code-actions button:hover{
+border-color:var(--accent);
+color:var(--accent);
+background:rgba(249,115,22,.05);
+}
+.code-actions button.copy-main{
+background:var(--success);
+color:#fff;
+border:none;
+}
+.code-actions button.copy-main:hover{background:#059669;}
+
+/* ===== بوکمارک ===== */
+.empty-state{
 text-align:center;
+padding:60px 20px;
+color:var(--text-muted);
+}
+.empty-state i{font-size:48px;margin-bottom:15px;color:var(--border);}
+.empty-state p{font-size:16px;}
+
+/* ===== مقایسه ===== */
+.compare-container{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
 margin-top:20px;
-background:#7f1d1d;
-padding:15px;
-border-radius:12px;
 }
-.not-found button{
-background:#22c55e;
-color:#000;
+.compare-card{
+background:var(--bg-card);
+border-radius:var(--radius);
+padding:20px;
+border:1px solid var(--border);
 }
-.error-header span:last-child {
-  display: inline-block;
-  transition: transform 0.3s ease, opacity 0.2s ease, color 0.3s ease;
-  font-weight: bold;
-  color: #ff9800; /* رنگ اولیه */
+.compare-card h3{
+font-size:16px;
+font-weight:700;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+gap:8px;
 }
-.error-header.open span:last-child {
-  color: #ff5252; /* وقتی باز شد */
+.compare-card p{font-size:13px;color:var(--text-secondary);line-height:1.7;}
+
+/* ===== نوتیف ===== */
+.toast{
+position:fixed;
+bottom:30px;
+left:50%;
+transform:translateX(-50%) translateY(100px);
+background:var(--bg-card);
+border:1px solid var(--border);
+color:var(--text-primary);
+padding:14px 28px;
+border-radius:var(--radius);
+font-weight:500;
+font-size:14px;
+opacity:0;
+transition:all .4s ease;
+z-index:9999;
+box-shadow:var(--shadow-lg);
+display:flex;
+align-items:center;
+gap:10px;
+}
+.toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+.toast i{font-size:18px;}
+
+/* ===== فوتر ===== */
+.site-footer{
+text-align:center;
+padding:30px 20px;
+border-top:1px solid var(--border);
+margin-top:40px;
+color:var(--text-muted);
+font-size:13px;
+}
+.site-footer i{color:var(--danger);}
+.site-footer .name{color:var(--accent);font-weight:700;}
+
+/* ===== ریسپانسیو ===== */
+@media(max-width:768px){
+#formSection{margin:40px 20px;padding:25px;}
+.profile-top{flex-direction:column;text-align:center;}
+.stats-grid{grid-template-columns:repeat(2,1fr);}
+.actions-grid{gap:6px;}
+.action-btn{font-size:12px;padding:8px 14px;}
+.compare-container{grid-template-columns:1fr;}
+.header-inner{flex-direction:column;gap:10px;}
+.header-actions{flex-wrap:wrap;justify-content:center;}
 }
 </style>
 </head>
-
 <body>
 
+<!-- ===== هدر ===== -->
+<header class="site-header">
+<div class="header-inner">
+<div class="logo">
+<i class="fas fa-bug"></i>
+Codex Error
+</div>
+<div class="header-actions">
+<button class="header-btn" onclick="location.reload()"><i class="fas fa-home"></i> صفحه اصلی</button>
+</div>
+</div>
+</header>
+
+<!-- ===== فرم ورود ===== -->
 <div id="formSection">
-<h1>Codex Error</h1>
-<input type="text" id="username" placeholder="اسم شما">
+<h1>🚀 Codex Error</h1>
+<p class="subtitle">راهنمای جامع خطاهای برنامه نویسی</p>
+
+<div class="form-group">
+<label><i class="fas fa-user"></i> نام شما</label>
+<input type="text" id="username" placeholder="مثلاً: علی">
+</div>
+
+<div class="form-group">
+<label><i class="fas fa-code"></i> زبان برنامه نویسی</label>
 <select id="language">
-<option value="">انتخاب زبان</option>
+<option value="">انتخاب کنید...</option>
 <option value="python">Python</option>
 <option value="php">PHP</option>
 <option value="js">JavaScript</option>
 <option value="c">C</option>
 <option value="cpp">C++</option>
 </select>
-<button onclick="start()">نمایش ارورها</button>
-<div class="footer">ساخته شده توسط محمدرسول مخبریان با عشق برای همه برنامه نویسان ایران ❤️</div>
 </div>
 
+<button class="submit-btn" onclick="start()">
+<i class="fas fa-rocket"></i> شروع کن!
+</button>
+
+<div class="footer-text">
+ساخته شده با <i class="fas fa-heart"></i> توسط محمدرسول مخبریان
+</div>
+</div>
+
+<!-- ===== محتوا ===== -->
 <div id="result"></div>
 
-<script>
+<!-- ===== نوتیف ===== -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span></span></div>
 
+<!-- ===== فوتر ===== -->
+<div class="site-footer">
+ساخته شده با <i class="fas fa-heart"></i> توسط <span class="name">محمدرسول مخبریان</span> برای همه برنامه‌نویسان ایران
+</div>
+
+<script>
 function escapeHTML(str){
 return str.replace(/&/g,'&amp;')
 .replace(/</g,'&lt;')
 .replace(/>/g,'&gt;')
 .replace(/"/g,'&quot;')
 .replace(/'/g,'&#039;');
+}
+
+function showToast(msg,icon='✅'){
+let t=document.getElementById('toast');
+t.querySelector('i').className=`fas ${icon==='✅'?'fa-check-circle':icon==='❌'?'fa-times-circle':'fa-info-circle'}`;
+t.querySelector('span').textContent=msg;
+t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function copyCode(el){
+let code=el.closest('.code-block').querySelector('code').textContent;
+navigator.clipboard.writeText(code).then(()=>{
+showToast('کپی شد!','✅');
+});
+}
+
+function toggleDarkMode(){
+document.body.classList.toggle('dark-mode');
+let btn=document.querySelector('.dark-mode-btn');
+if(btn){
+btn.innerHTML=document.body.classList.contains('dark-mode')?'<i class="fas fa-sun"></i> حالت روشن':'<i class="fas fa-moon"></i> حالت تاریک';
+}
+localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));
+}
+
+function showRandomError(){
+let lang=document.getElementById('language').value;
+if(!lang||!database[lang]){showToast('اول زبان رو انتخاب کن','❌');return;}
+let errors=database[lang];
+let rand=errors[Math.floor(Math.random()*errors.length)];
+showToast(`🎲 ${rand.title}`,'🎲');
+}
+
+// ===== بوکمارک =====
+let bookmarks=JSON.parse(localStorage.getItem('codexBookmarks')||'[]');
+
+function toggleBookmark(lang,index){
+let key=lang+'_'+index;
+if(bookmarks.includes(key)){
+bookmarks=bookmarks.filter(b=>b!==key);
+showToast('از بوکمارک حذف شد','❌');
+}else{
+bookmarks.push(key);
+showToast('به بوکمارک اضافه شد','⭐');
+}
+localStorage.setItem('codexBookmarks',JSON.stringify(bookmarks));
+renderBookmarkBtn();
+start();
+}
+
+function renderBookmarkBtn(){
+let btn=document.getElementById('showBookmarksBtn');
+if(!btn)return;
+let count=bookmarks.length;
+btn.innerHTML=count>0?`<i class="fas fa-bookmark"></i> بوکمارک‌ها (${count})`:'<i class="fas fa-bookmark"></i> بوکمارک‌ها';
+}
+
+function showBookmarks(){
+let lang=document.getElementById('language').value;
+if(!lang||!database[lang]){showToast('اول زبان رو انتخاب کن','❌');return;}
+let resultDiv=document.getElementById('result');
+let html=`
+<div class="main-container">
+<div class="profile-header">
+<div class="profile-top">
+<div class="profile-info">
+<h2>⭐ بوکمارک‌های شما</h2>
+<p>ارورهایی که ذخیره کردی</p>
+</div>
+<div class="profile-badge"><i class="fas fa-bookmark"></i> ${bookmarks.length} مورد</div>
+</div>
+</div>
+<div style="text-align:center;margin:10px 0;">
+<button class="action-btn danger" onclick="clearBookmarks()" style="color:var(--danger);"><i class="fas fa-trash"></i> پاک کردن همه</button>
+<button class="action-btn primary" onclick="start()"><i class="fas fa-arrow-right"></i> بازگشت</button>
+</div>`;
+let count=0;
+database[lang].forEach((e,i)=>{
+let key=lang+'_'+i;
+if(bookmarks.includes(key)){
+count++;
+html+=`
+<div class="error-card bookmarked">
+<div class="error-header" onclick="toggleContent('bm${i}')">
+<div class="title"><i class="fas fa-bookmark bookmark-icon"></i> ${e.title}</div>
+<div class="icon">+</div>
+</div>
+<div class="error-content" id="bm${i}">
+<div class="error-content-inner">
+<p>${e.solution}</p>
+<div class="code-actions">
+<button onclick="toggleBookmark('${lang}',${i})"><i class="fas fa-bookmark"></i> حذف بوکمارک</button>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge danger">❌ اشتباه</span></div>
+<code>${escapeHTML(e.example1)}</code>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge success">✅ درست</span></div>
+<code>${escapeHTML(e.example2)}</code>
+</div>
+</div>
+</div>
+</div>`;
+}
+});
+if(count===0)html+=`<div class="empty-state"><i class="fas fa-bookmark"></i><p>هنوز بوکمارکی نداری 😢</p></div>`;
+html+=`</div>`;
+resultDiv.innerHTML=html;
+}
+
+function clearBookmarks(){
+bookmarks=[];
+localStorage.setItem('codexBookmarks','[]');
+showToast('همه بوکمارک‌ها پاک شد','🗑️');
+showBookmarks();
+}
+
+// ===== باز کردن همه =====
+let allOpen=false;
+function toggleAll(){
+allOpen=!allOpen;
+document.querySelectorAll('.error-content').forEach(el=>{
+el.classList.toggle('open',allOpen);
+});
+document.querySelectorAll('.error-header').forEach(el=>{
+el.classList.toggle('open',allOpen);
+let icon=el.querySelector('.icon');
+icon.textContent=allOpen?'×':'+';
+});
+let btn=document.querySelector('.expand-all-btn');
+btn.innerHTML=allOpen?'<i class="fas fa-compress"></i> بستن همه':'<i class="fas fa-expand"></i> باز کردن همه';
+}
+
+// ===== خروجی =====
+function exportData(){
+let lang=document.getElementById('language').value;
+if(!lang||!database[lang]){showToast('اول زبان رو انتخاب کن','❌');return;}
+let data=JSON.stringify(database[lang],null,2);
+let blob=new Blob([data],{type:'application/json'});
+let a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download=`codex_${lang}.json`;
+a.click();
+showToast('فایل دانلود شد','📥');
+}
+
+// ===== مقایسه =====
+function compareErrors(){
+let lang=document.getElementById('language').value;
+if(!lang||!database[lang]){showToast('اول زبان رو انتخاب کن','❌');return;}
+let errors=database[lang];
+let rand1=errors[Math.floor(Math.random()*errors.length)];
+let rand2=errors[Math.floor(Math.random()*errors.length)];
+while(rand2===rand1)rand2=errors[Math.floor(Math.random()*errors.length)];
+showToast(`📊 ${rand1.title} vs ${rand2.title}`,'📊');
+let resultDiv=document.getElementById('result');
+let html=`
+<div class="main-container">
+<div class="profile-header">
+<div class="profile-top">
+<div class="profile-info">
+<h2>📊 مقایسه دو ارور</h2>
+<p>مقایسه تصادفی</p>
+</div>
+</div>
+</div>
+<div class="compare-container">
+<div class="compare-card">
+<h3 style="color:var(--accent);"><i class="fas fa-bug"></i> ${rand1.title}</h3>
+<p>${rand1.solution}</p>
+<div class="code-block">
+<div class="code-label"><span class="badge danger">❌</span></div>
+<code>${escapeHTML(rand1.example1)}</code>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge success">✅</span></div>
+<code>${escapeHTML(rand1.example2)}</code>
+</div>
+</div>
+<div class="compare-card">
+<h3 style="color:var(--info);"><i class="fas fa-bug"></i> ${rand2.title}</h3>
+<p>${rand2.solution}</p>
+<div class="code-block">
+<div class="code-label"><span class="badge danger">❌</span></div>
+<code>${escapeHTML(rand2.example1)}</code>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge success">✅</span></div>
+<code>${escapeHTML(rand2.example2)}</code>
+</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:16px;">
+<button class="action-btn primary" onclick="compareErrors()"><i class="fas fa-random"></i> مقایسه دوباره</button>
+<button class="action-btn" onclick="start()"><i class="fas fa-arrow-right"></i> بازگشت</button>
+</div>
+</div>`;
+resultDiv.innerHTML=html;
+}
+
+// ===== اشتراک‌گذاری =====
+function shareErrors(){
+let lang=document.getElementById('language').value;
+if(!lang||!database[lang]){showToast('اول زبان رو انتخاب کن','❌');return;}
+let text=`🚀 Codex Error - ${lang.toUpperCase()}\n`;
+text+=`📚 ${database[lang].length} ارور رایج\n\n`;
+database[lang].slice(0,5).forEach(e=>{
+text+=`🔹 ${e.title}\n`;
+});
+text+=`\n❤️ ساخته شده توسط محمدرسول مخبریان`;
+if(navigator.share){
+navigator.share({title:'Codex Error',text:text}).catch(()=>{});
+}else{
+navigator.clipboard.writeText(text).then(()=>{
+showToast('متن کپی شد! میتونی بفرستی','📤');
+});
+}
 }
 
 const database = {
@@ -181,7 +855,12 @@ const database = {
     {title:"TabError",solution:"این خطا وقتی رخ می‌دهد که تورفتگی با ترکیب Tab و Space انجام شده باشد. همیشه از یک نوع فاصله استفاده کن و IDE را تنظیم کن.",example1:"if True:\n\tprint('hi')",example2:"if True:\n    print('hi')"},
     {title:"UnboundLocalError",solution:"این خطا زمانی رخ می‌دهد که متغیری محلی قبل از مقداردهی استفاده شود. مطمئن شو مقداردهی قبل از استفاده انجام شده باشد.",example1:"def f():\n print(x)\n x=5",example2:"def f():\n x=5\n print(x)"},
     {title:"AssertionError",solution:"زمانی رخ می‌دهد که شرط assert برقرار نباشد. بررسی کن شرط منطقی درست باشد یا پیام مناسب بده.",example1:"assert 2>3",example2:"assert 3>2"},
-    {title:"KeyboardInterrupt",solution:"این خطا وقتی رخ می‌دهد که کاربر اجرای برنامه را با Ctrl+C متوقف کند. می‌توان از try/except برای مدیریت استفاده کرد.",example1:"while True: pass",example2:"try:\n while True: pass\nexcept KeyboardInterrupt:\n print('Stopped')"}
+    {title:"KeyboardInterrupt",solution:"این خطا وقتی رخ می‌دهد که کاربر اجرای برنامه را با Ctrl+C متوقف کند. می‌توان از try/except برای مدیریت استفاده کرد.",example1:"while True: pass",example2:"try:\n while True: pass\nexcept KeyboardInterrupt:\n print('Stopped')"},
+    {title:"GeneratorExit",solution:"این خطا زمانی رخ می‌دهد که generator با متد close() بسته شود. معمولاً نیازی به مدیریت دستی ندارد.",example1:"gen.close()",example2:"مدیریت خودکار"},
+    {title:"FloatingPointError",solution:"زمانی رخ می‌دهد که عملیات ممیز شناور با خطا مواجه شود. از decimal برای دقت بالا استفاده کن.",example1:"0.1 + 0.2",example2:"Decimal('0.1') + Decimal('0.2')"},
+    {title:"MemoryError",solution:"حافظه سیستم پر شده است. داده‌های حجیم را پردازش نکن یا از generator استفاده کن.",example1:"[0]*10**9",example2:"استفاده از generator"},
+    {title:"SystemExit",solution:"این خطا وقتی رخ می‌دهد که sys.exit() فراخوانی شود. در try/except می‌توانی مدیریتش کنی.",example1:"sys.exit()",example2:"مدیریت با except"},
+    {title:"EOFError",solution:"وقتی input() به انتهای فایل برسد این خطا رخ می‌دهد. قبل از خواندن بررسی کن داده وجود دارد.",example1:"input()",example2:"بررسی وجود داده"}
   ],
 
   /* ================= PHP ================= */
@@ -205,7 +884,12 @@ const database = {
     {title:"Class not found",solution:"کلاس موردنظر تعریف نشده یا نام اشتباه است. بررسی کن نام درست باشد.",example1:"new Bar();",example2:"class Bar{}"},
     {title:"Cannot redeclare",solution:"کلاس یا تابعی دوباره تعریف شده است. نام‌ها را بررسی کن.",example1:"function a(){} function a(){}",example2:"نام متفاوت بده"},
     {title:"Unknown column",solution:"ستون در دیتابیس وجود ندارد. نام ستون را بررسی کن.",example1:"SELECT x FROM t",example2:"ستون صحیح"},
-    {title:"Division warning",solution:"هشدار تقسیم. قبل از تقسیم بررسی کن که مخرج صفر نباشد.",example1:"5/0;",example2:"5/1;"}
+    {title:"Division warning",solution:"هشدار تقسیم. قبل از تقسیم بررسی کن که مخرج صفر نباشد.",example1:"5/0;",example2:"5/1;"},
+    {title:"PDOException",solution:"خطای مربوط به PDO و دیتابیس. کوئری و پارامترها را بررسی کن.",example1:"new PDO('mysql:...')",example2:"بررسی اتصال"},
+    {title:"Invalid argument",solution:"آرگومان نامعتبر به تابع ارسال شده است. نوع و مقدار پارامتر را بررسی کن.",example1:"strpos('a','b',-1)",example2:"strpos('a','b',0)"},
+    {title:"Maximum execution time",solution:"زمان اجرای اسکریپت بیش از حد مجاز شده است. حلقه‌ها و کوئری‌ها را بهینه کن.",example1:"while(true){}",example2:"set_time_limit(0)"},
+    {title:"Trait not found",solution:"Trait موردنظر وجود ندارد. مسیر فایل و نام را بررسی کن.",example1:"use MyTrait;",example2:"require 'MyTrait.php'"},
+    {title:"Interface not found",solution:"اینترفیس تعریف نشده است. فایل مربوطه را include کن.",example1:"implements MyInterface",example2:"include 'MyInterface.php'"}
   ],
 
   /* ================= JS ================= */
@@ -229,190 +913,267 @@ const database = {
     {title:"Type coercion error",solution:"جاوااسکریپت هنگام تبدیل نوع داده به شکل غیرمنتظره عمل می‌کند. نوع داده را بررسی کن یا از Number()/String() استفاده کن.",example1:"5+'5'",example2:"5+Number('5')"},
     {title:"Async error",solution:"در توابع async اگر promise reject شود و catch نداشته باشد خطا رخ می‌دهد. همیشه از try/catch یا catch استفاده کن.",example1:"async function f(){throw 'err'}",example2:"async function f(){try{}catch{}}"},
     {title:"LocalStorage error",solution:"دسترسی به LocalStorage ممکن است محدود شده باشد یا فضای کافی نباشد. قبل از setItem بررسی کن.",example1:"localStorage.setItem('x','y')",example2:"if(window.localStorage) localStorage.setItem('x','y');"},
-    {title:"RegExp error",solution:"ساختار RegExp اشتباه است. بررسی کن الگو صحیح باشد.",example1:"new RegExp('[')",example2:"new RegExp('\\[')"}
+    {title:"RegExp error",solution:"ساختار RegExp اشتباه است. بررسی کن الگو صحیح باشد.",example1:"new RegExp('[')",example2:"new RegExp('\\[')"},
+    {title:"InternalError",solution:"خطای داخلی موتور جاوااسکریپت. معمولاً به دلیل recursion زیاد یا داده سنگین.",example1:"function f(){f()} f()",example2:"شرط توقف در recursion"},
+    {title:"AggregateError",solution:"چندین خطا در Promise.allSettled یا Promise.any رخ داده است.",example1:"Promise.any([reject1, reject2])",example2:"مدیریت با catch"},
+    {title:"Not a function",solution:"چیزی که تابع نیست رو صدا زدی. نوع متغیر را بررسی کن.",example1:"let x=5; x()",example2:"typeof x === 'function'"},
+    {title:"Assignment to constant",solution:"متغیر const رو نمی‌تونی تغییر بدی. از let استفاده کن.",example1:"const x=5; x=10",example2:"let x=5; x=10"},
+    {title:"Missing formal parameter",solution:"در تعریف تابع پارامترها رو درست مشخص کن.",example1:"function f(,)",example2:"function f(a,b){}"}
   ],
 c: [
 {
 title: "Missing Semicolon",
 solution: "در C هر دستور باید با ; تمام شود. اگر فراموش شود کامپایلر خطا می‌دهد.",
-example1: "int x = 10",  // ❌ بدون سمی‌کالن
-example2: "int x = 10;"  // ✅ صحیح
+example1: "int x = 10",
+example2: "int x = 10;"
 },
 {
 title: "Undeclared Variable",
 solution: "قبل از استفاده از هر متغیر باید نوع آن را مشخص کنی. مثلا int یا float.",
-example1: "x = 5;",  // ❌ بدون تعریف
-example2: "int x = 5;"  // ✅ تعریف شده
+example1: "x = 5;",
+example2: "int x = 5;"
 },
 {
 title: "Array Out of Bounds",
 solution: "آرایه‌ها از اندیس 0 شروع می‌شوند. اگر اندازه 3 باشد، آخرین اندیس 2 است.",
-example1: "int arr[3]; arr[3]=10;", // ❌ خارج از محدوده
-example2: "int arr[3]; arr[2]=10;" // ✅ در محدوده
+example1: "int arr[3]; arr[3]=10;",
+example2: "int arr[3]; arr[2]=10;"
 },
 {
 title: "Division by Zero",
 solution: "قبل از تقسیم بررسی کن که مخرج صفر نباشد.",
-example1: "int a = 5 / 0;", // ❌ تقسیم بر صفر
-example2: "if(b!=0) { int a = 5 / b; }" // ✅ بررسی مخرج
+example1: "int a = 5 / 0;",
+example2: "if(b!=0) { int a = 5 / b; }"
 },
 {
 title: "Wrong Format Specifier",
 solution: "در printf باید از فرمت درست استفاده شود: %d برای int، %f برای float.",
-example1: 'printf("%d", 3.14);', // ❌ فرمت اشتباه
-example2: 'printf("%f", 3.14);' // ✅ فرمت صحیح
+example1: 'printf("%d", 3.14);',
+example2: 'printf("%f", 3.14);'
 },
 {
 title: "Uninitialized Variable",
 solution: "اگر متغیر مقدار اولیه نداشته باشد، مقدار تصادفی می‌گیرد.",
-example1: "int x; printf(\"%d\", x);", // ❌ بدون مقداردهی
-example2: "int x = 0; printf(\"%d\", x);" // ✅ مقداردهی اولیه
+example1: "int x; printf(\"%d\", x);",
+example2: "int x = 0; printf(\"%d\", x);"
 },
 {
 title: "Pointer Not Initialized",
 solution: "اشاره‌گر باید به یک آدرس معتبر اشاره کند.",
-example1: "int *p; *p = 5;", // ❌ اشاره‌گر NULL
-example2: "int x = 5; int *p = &x;" // ✅ اشاره‌گر درست
+example1: "int *p; *p = 5;",
+example2: "int x = 5; int *p = &x;"
 },
 {
 title: "Segmentation Fault",
 solution: "دسترسی به حافظه غیرمجاز باعث این خطا می‌شود. مطمئن شو اشاره‌گر NULL نیست.",
-example1: "int *p = NULL; *p = 5;", // ❌ NULL دسترسی
-example2: "if(p!=NULL) *p = 5;" // ✅ بررسی قبل استفاده
+example1: "int *p = NULL; *p = 5;",
+example2: "if(p!=NULL) *p = 5;"
 },
 {
 title: "Memory Leak",
 solution: "اگر malloc استفاده کردی باید free هم بزنی تا حافظه آزاد شود.",
-example1: "int* p = malloc(sizeof(int));", // ❌ بدون free
-example2: "int* p = malloc(sizeof(int)); free(p);" // ✅ آزادسازی
+example1: "int* p = malloc(sizeof(int));",
+example2: "int* p = malloc(sizeof(int)); free(p);"
 },
 {
 title: "Infinite Loop",
 solution: "حلقه باید شرط خروج داشته باشد و متغیر تغییر کند.",
-example1: "while(i<5){}", // ❌ بی‌پایان
-example2: "while(i<5){ i++; }" // ✅ شرط خروج
+example1: "while(i<5){}",
+example2: "while(i<5){ i++; }"
 },
 {
 title: "Missing Header File",
 solution: "برای استفاده از توابع استاندارد C باید include کنی.",
-example1: "printf(\"Hi\");", // ❌ بدون include
-example2: "#include <stdio.h>\nprintf(\"Hi\");" // ✅ include درست
+example1: "printf(\"Hi\");",
+example2: "#include <stdio.h>\nprintf(\"Hi\");"
 },
 {
 title: "Using gets()",
 solution: "تابع gets ناامن است. از fgets استفاده کن.",
-example1: "gets(name);", // ❌ ناامن
-example2: "fgets(name, 50, stdin);" // ✅ ایمن
+example1: "gets(name);",
+example2: "fgets(name, 50, stdin);"
 },
 {
 title: "Buffer Overflow",
 solution: "اندازه ورودی را محدود کن تا از آرایه بزرگ‌تر نشود.",
-example1: "char name[5]; scanf(\"%s\", name);", // ❌ ممکنه سرریز بشه
-example2: "char name[5]; scanf(\"%4s\", name);" // ✅ محدودیت طول
+example1: "char name[5]; scanf(\"%s\", name);",
+example2: "char name[5]; scanf(\"%4s\", name);"
 },
 {
 title: "Assignment Instead of Comparison",
 solution: "در شرط‌ها از == برای مقایسه استفاده کن نه =.",
-example1: "if(x = 5)", // ❌ اشتباه
-example2: "if(x == 5)" // ✅ صحیح
+example1: "if(x = 5)",
+example2: "if(x == 5)"
 },
 {
 title: "Missing return",
 solution: "توابع غیر void باید مقدار برگردانند.",
-example1: "int sum(){ int a = 5; }", // ❌ بدون return
-example2: "int sum(){ return 5; }" // ✅ return اضافه شده
+example1: "int sum(){ int a = 5; }",
+example2: "int sum(){ return 5; }"
+},
+{
+title: "Dangling else",
+solution: "else به کدام if تعلق دارد؟ از {} برای مشخص کردن بلاک استفاده کن.",
+example1: "if(a) if(b) x++; else y++;",
+example2: "if(a){ if(b) x++; else y++; }"
+},
+{
+title: "Integer Overflow",
+solution: "وقتی عدد از محدوده int خارج می‌شود. از long long استفاده کن.",
+example1: "int x = 2147483647 + 1;",
+example2: "long long x = 2147483647LL + 1;"
+},
+{
+title: "Unused Variable",
+solution: "متغیری تعریف شده ولی استفاده نشده. کامپایلر هشدار می‌دهد.",
+example1: "int x = 5;",
+example2: "int x = 5; printf(\"%d\", x);"
+},
+{
+title: "Confusing Increment",
+solution: "تفاوت بین ++x و x++ رو درست استفاده کن.",
+example1: "int y = x++ + ++x;",
+example2: "x++; y = x + x;"
+},
+{
+title: "Wrong sizeof usage",
+solution: "sizeof آرایه رو برمی‌گردونه نه تعداد عناصر.",
+example1: "int arr[10]; sizeof(arr)/sizeof(arr[0])",
+example2: "int arr[10]; int n = sizeof(arr)/sizeof(arr[0]);"
+},
+{
+title: "Missing break in switch",
+solution: "در switch از break استفاده کن تا case بعدی اجرا نشه.",
+example1: "switch(x){ case 1: x++; case 2: x--; }",
+example2: "switch(x){ case 1: x++; break; case 2: x--; break; }"
 }
 ],
 cpp: [
 {
 title: "Missing iostream",
 solution: "برای استفاده از cout و cin باید iostream را include کنی.",
-example1: 'cout << "Hi";', // ❌ بدون include
-example2: '#include <iostream>\nusing namespace std;\ncout << "Hi";' // ✅ include درست
+example1: 'cout << "Hi";',
+example2: '#include <iostream>\nusing namespace std;\ncout << "Hi";'
 },
 {
 title: "Missing Semicolon",
 solution: "در C++ هم هر دستور باید با ; تمام شود.",
-example1: "int x = 5", // ❌ بدون سمی‌کالن
-example2: "int x = 5;" // ✅ صحیح
+example1: "int x = 5",
+example2: "int x = 5;"
 },
 {
 title: "Using = Instead of ==",
 solution: "برای مقایسه در شرط‌ها از == استفاده کن.",
-example1: "if(x = 10)", // ❌ اشتباه
-example2: "if(x == 10)" // ✅ صحیح
+example1: "if(x = 10)",
+example2: "if(x == 10)"
 },
 {
 title: "No Return in Function",
 solution: "توابع غیر void باید return داشته باشند.",
-example1: "int sum(){ int a = 5; }", // ❌ بدون return
-example2: "int sum(){ return 5; }" // ✅ return اضافه شده
+example1: "int sum(){ int a = 5; }",
+example2: "int sum(){ return 5; }"
 },
 {
 title: "Memory Leak",
 solution: "اگر new کردی باید delete بزنی تا حافظه آزاد شود.",
-example1: "int* p = new int;", // ❌ بدون delete
-example2: "int* p = new int; delete p;" // ✅ آزادسازی
+example1: "int* p = new int;",
+example2: "int* p = new int; delete p;"
 },
 {
 title: "Dangling Pointer",
 solution: "بعد از delete مقدار اشاره‌گر را NULL کن.",
-example1: "delete p; *p = 5;", // ❌ دسترسی بعد از delete
-example2: "delete p; p = NULL;" // ✅ NULL کردن اشاره‌گر
+example1: "delete p; *p = 5;",
+example2: "delete p; p = NULL;"
 },
 {
 title: "Accessing Private Member",
 solution: "اعضای private را مستقیم نمی‌توان استفاده کرد، از getter یا setter استفاده کن.",
-example1: "obj.x = 5;", // ❌ مستقیم
-example2: "obj.setX(5);" // ✅ از متد عمومی
+example1: "obj.x = 5;",
+example2: "obj.setX(5);"
 },
 {
 title: "No Default Constructor",
 solution: "اگر constructor پارامتردار ساختی، نسخه بدون پارامتر هم تعریف کن.",
-example1: "MyClass obj;", // ❌ بدون constructor پیش‌فرض
-example2: "MyClass(){ }" // ✅ constructor پیش‌فرض
+example1: "MyClass obj;",
+example2: "MyClass(){ }"
 },
 {
 title: "Stack Overflow",
 solution: "در recursion شرط پایان بگذار.",
-example1: "void f(){ f(); }", // ❌ بی‌نهایت
-example2: "void f(int n){ if(n==0) return; f(n-1); }" // ✅ شرط توقف
+example1: "void f(){ f(); }",
+example2: "void f(int n){ if(n==0) return; f(n-1); }"
 },
 {
 title: "Namespace Conflict",
 solution: "از std:: استفاده کن یا using namespace std;",
-example1: "cout << 5;", // ❌ بدون std::
-example2: "std::cout << 5;" // ✅ درست
+example1: "cout << 5;",
+example2: "std::cout << 5;"
 },
 {
 title: "Wrong Use of cin",
 solution: "برای رشته با فاصله از getline استفاده کن.",
-example1: "cin >> name;", // ❌ فقط یک کلمه می‌گیرد
-example2: "getline(cin, name);" // ✅ کل خط
+example1: "cin >> name;",
+example2: "getline(cin, name);"
 },
 {
 title: "Multiple Definition",
 solution: "در فایل هدر از #ifndef استفاده کن تا چندباره تعریف نشود.",
-example1: "function defined twice", // ❌ تعریف چندباره
-example2: "#ifndef FILE_H\n#define FILE_H\n#endif" // ✅ محافظت شده
+example1: "function defined twice",
+example2: "#ifndef FILE_H\n#define FILE_H\n#endif"
 },
 {
 title: "Type Conversion Error",
 solution: "برای تبدیل امن از static_cast استفاده کن.",
-example1: "int x = 3.14;", // ❌ هشدار تبدیل
-example2: "int x = static_cast<int>(3.14);" // ✅ تبدیل امن
+example1: "int x = 3.14;",
+example2: "int x = static_cast<int>(3.14);"
 },
 {
 title: "Missing Virtual Destructor",
 solution: "در کلاس‌های پایه destructor را virtual تعریف کن.",
-example1: "~Base(){}", // ❌ غیر virtual
-example2: "virtual ~Base(){}" // ✅ virtual
+example1: "~Base(){}",
+example2: "virtual ~Base(){}"
 },
 {
 title: "Uninitialized Object",
 solution: "در constructor مقداردهی اولیه انجام بده.",
-example1: "int x;", // ❌ بدون مقداردهی
-example2: "MyClass():x(0){}" // ✅ مقداردهی اولیه
+example1: "int x;",
+example2: "MyClass():x(0){}"
+},
+{
+title: "Copy Constructor Not Defined",
+solution: "اگر کلاس pointer داره، copy constructor تعریف کن.",
+example1: "MyClass(const MyClass& other)",
+example2: "MyClass(const MyClass& other){ /* deep copy */ }"
+},
+{
+title: "Operator Overloading Error",
+solution: "عملگرها رو درست overload کن. نوع برگشتی مهمه.",
+example1: "MyClass operator+(MyClass a, MyClass b)",
+example2: "MyClass operator+(const MyClass& a, const MyClass& b)"
+},
+{
+title: "Using this Incorrectly",
+solution: "this اشاره‌گر به شیء فعلی است. درست استفاده کن.",
+example1: "this = &other;",
+example2: "return *this;"
+},
+{
+title: "Friend Function Misuse",
+solution: "friend به کلاس یا تابع دسترسی خصوصی می‌دهد. کم استفاده کن.",
+example1: "friend class MyClass;",
+example2: "از getter/setter استفاده کن"
+},
+{
+title: "Template Syntax Error",
+solution: "در template از typename یا class استفاده کن.",
+example1: "template <T>",
+example2: "template <typename T>"
+},
+{
+title: "Exception Not Caught",
+solution: "از try/catch برای مدیریت خطا استفاده کن.",
+example1: "throw std::runtime_error('err');",
+example2: "try{ ... } catch(const std::exception& e){ ... }"
 }
 ],
 };
@@ -420,7 +1181,7 @@ example2: "MyClass():x(0){}" // ✅ مقداردهی اولیه
 function toggleContent(id){
     let el = document.getElementById(id);
     let header = el.previousElementSibling;
-    let icon = header.querySelector("span:last-child");
+    let icon = header.querySelector('.icon');
 
     el.classList.toggle("open");
     header.classList.toggle("open");
@@ -437,7 +1198,7 @@ function toggleContent(id){
 
 function filterErrors(){
     let input = document.getElementById("searchInput").value.toLowerCase();
-    let lang = document.getElementById("language").value; // زبان فعلی
+    let lang = document.getElementById("language").value;
     let found = false;
 
     document.querySelectorAll(".error-card").forEach(card=>{
@@ -454,32 +1215,74 @@ function filterErrors(){
 
     if(input && !found){
         let box = document.createElement("div");
-        box.className = "not-found";
+        box.className = "empty-state";
         box.id = "notFoundBox";
         box.innerHTML = `
-❌ اروری پیدا نشد
-<br><br>
-<button onclick="window.open('https://www.google.com/search?q=ارور+${encodeURIComponent(input)}+ زبان برنامه نویسی برای+${encodeURIComponent(lang)}','_blank')">
-جستجو در گوگل
+<i class="fas fa-search"></i>
+<p>اروری پیدا نشد</p>
+<br>
+<button class="action-btn primary" onclick="window.open('https://www.google.com/search?q=ارور+${encodeURIComponent(input)}+ زبان برنامه نویسی برای+${encodeURIComponent(lang)}','_blank')">
+<i class="fas fa-search"></i> جستجو در گوگل
 </button>
 `;
-        document.getElementById("result").appendChild(box);
+        document.getElementById("result").querySelector('.main-container').appendChild(box);
     }
 }
 
 function start(){
     let name = document.getElementById("username").value;
     let lang = document.getElementById("language").value;
-    if(!name || !lang){ alert("همه فیلدها را پر کن"); return; }
+    if(!name || !lang){ showToast("همه فیلدها رو پر کن",'❌'); return; }
 
     document.getElementById("formSection").style.display = "none";
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = "";
 
-    let html = `<h2>سلام ${name}</h2>
-<h3>۱۵ ارور رایج ${lang.toUpperCase()}</h3>
-<button class="back-button" onclick="goBack()">بازگشت</button>
-<input class="search-box" id="searchInput" onkeyup="filterErrors()" placeholder="جستجو">
+    let total = database[lang] ? database[lang].length : 0;
+    let bookmarkedCount = bookmarks.filter(b=>b.startsWith(lang)).length;
+
+    let html = `
+<div class="main-container">
+
+<div class="profile-header">
+<div class="profile-top">
+<div class="profile-info">
+<h2>سلام <span>${name}</span> 👋</h2>
+<p>${total} ارور رایج ${lang.toUpperCase()} رو برات آماده کردم</p>
+</div>
+<div class="profile-badge"><i class="fas fa-code"></i> ${lang.toUpperCase()}</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card"><div class="num">${total}</div><div class="label">تعداد ارورها</div></div>
+<div class="stat-card"><div class="num">${bookmarkedCount}</div><div class="label">بوکمارک شده</div></div>
+<div class="stat-card"><div class="num">${Math.round(bookmarkedCount/total*100)||0}%</div><div class="label">پیشرفت</div></div>
+</div>
+
+<div class="progress-section">
+<div class="progress-label">
+<span><i class="fas fa-bookmark"></i> پیشرفت بوکمارک</span>
+<span>${bookmarkedCount}/${total}</span>
+</div>
+<div class="progress-track">
+<div class="progress-fill" style="width:${(bookmarkedCount/total*100)||0}%"></div>
+</div>
+</div>
+</div>
+
+<div class="actions-grid">
+<button class="action-btn primary" onclick="showRandomError()"><i class="fas fa-dice"></i> تصادفی</button>
+<button class="action-btn info" onclick="toggleAll()"><i class="fas fa-expand"></i> باز کردن همه</button>
+<button class="action-btn success" onclick="exportData()"><i class="fas fa-download"></i> خروجی</button>
+<button class="action-btn purple" onclick="compareErrors()"><i class="fas fa-not-equal"></i> مقایسه</button>
+<button class="action-btn pink" onclick="shareErrors()"><i class="fas fa-share-alt"></i> اشتراک</button>
+<button class="action-btn warning" id="showBookmarksBtn" onclick="showBookmarks()"><i class="fas fa-bookmark"></i> بوکمارک‌ها (${bookmarks.length})</button>
+</div>
+
+<div class="search-wrapper">
+<i class="fas fa-search"></i>
+<input class="search-box" id="searchInput" onkeyup="filterErrors()" placeholder="جستجوی ارور...">
+</div>
 `;
 
     if(!database[lang]){
@@ -488,33 +1291,41 @@ function start(){
     }
 
     database[lang].forEach((e,i)=>{
+        let isBookmarked=bookmarks.includes(lang+'_'+i);
         html += `
-<div class="error-card">
-  <div class="error-header" onclick="toggleContent('c${i}')">
-    <span>${e.title}</span>
-    <span style="float:right">+</span>
-  </div>
-  <div class="error-content" id="c${i}">
-    <div class="error-content-inner">
-      <p>${e.solution}</p>
-      <code>❌ ${escapeHTML(e.example1)}</code>
-      <code>✅ ${escapeHTML(e.example2)}</code>
-    </div>
-  </div>
+<div class="error-card ${isBookmarked?'bookmarked':''}">
+<div class="error-header" onclick="toggleContent('c${i}')">
+<div class="title">${isBookmarked?'<i class="fas fa-bookmark bookmark-icon"></i>':''} ${e.title}</div>
+<div class="icon">+</div>
 </div>
-`;
+<div class="error-content" id="c${i}">
+<div class="error-content-inner">
+<p>${e.solution}</p>
+<div class="code-actions">
+<button onclick="toggleBookmark('${lang}',${i})"><i class="fas ${isBookmarked?'fa-bookmark':'fa-bookmark'}"></i> ${isBookmarked?'حذف بوکمارک':'بوکمارک'}</button>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge danger">❌ اشتباه</span> <span style="margin-right:auto;font-size:11px;color:var(--text-muted);">مثال</span></div>
+<code>${escapeHTML(e.example1)}</code>
+<div class="code-actions"><button class="copy-main" onclick="copyCode(this)"><i class="fas fa-copy"></i> کپی</button></div>
+</div>
+<div class="code-block">
+<div class="code-label"><span class="badge success">✅ درست</span> <span style="margin-right:auto;font-size:11px;color:var(--text-muted);">مثال</span></div>
+<code>${escapeHTML(e.example2)}</code>
+<div class="code-actions"><button class="copy-main" onclick="copyCode(this)"><i class="fas fa-copy"></i> کپی</button></div>
+</div>
+</div>
+</div>
+</div>`;
     });
 
-    html += `<div class="footer">ساخته شده توسط محمدرسول مخبریان با عشق برای همه برنامه نویسان ایران ❤️</div>`;
+    html += `</div>`;
     resultDiv.innerHTML = html;
-}
 
-function goBack(){
-document.getElementById("result").innerHTML="";
-document.getElementById("formSection").style.display="block";
+    if(localStorage.getItem('darkMode')==='true'){
+        document.body.classList.add('dark-mode');
+    }
 }
-
 </script>
-
 </body>
 </html>
